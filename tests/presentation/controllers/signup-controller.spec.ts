@@ -72,6 +72,15 @@ describe('SignUp Controller', () => {
     expect(addAccountSpy.params).toEqual({
       name: request.name,
       email: request.email,
+      cardNumber: request.cardNumber,
+      cardHolder: request.cardHolder,
+      expirationDate: request.expirationDate,
+      cvv: request.cvv,
+      street: request.street,
+      housenumber: request.housenumber,
+      neighborghood: request.neighborghood,
+      city: request.city,
+      state: request.state,
       password: request.password,
     })
   })

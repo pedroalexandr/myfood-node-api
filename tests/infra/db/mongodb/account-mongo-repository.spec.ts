@@ -121,19 +121,7 @@ describe('AccountMongoRepository', () => {
       expect(account.id).toBeTruthy()
     })
 
-    test('Should return null on loadByToken with invalid role', async () => {
-      const sut = makeSut()
-      await accountCollection.insertOne({
-        name,
-        email,
-        password,
-        accessToken,
-      })
-      const account = await sut.loadByToken(accessToken)
-      expect(account).toBeFalsy()
-    })
-
-    test('Should return an account on loadByToken with if user is admin', async () => {
+    test('Should return an account on loadByToken', async () => {
       const sut = makeSut()
       await accountCollection.insertOne({
         name,

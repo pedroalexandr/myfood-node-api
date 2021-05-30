@@ -1,6 +1,10 @@
 import { DbAddAccount } from '@/data/usecases'
 import { mockAddAccountParams, throwError } from '@/tests/domain/mocks'
-import { HasherSpy, AddAccountRepositorySpy, CheckAccountByEmailRepositorySpy } from '@/tests/data/mocks'
+import {
+  HasherSpy,
+  AddAccountRepositorySpy,
+  CheckAccountByEmailRepositorySpy,
+} from '@/tests/data/mocks'
 
 type SutTypes = {
   sut: DbAddAccount
@@ -10,15 +14,20 @@ type SutTypes = {
 }
 
 const makeSut = (): SutTypes => {
-  const checkAccountByEmailRepositorySpy = new CheckAccountByEmailRepositorySpy()
+  const checkAccountByEmailRepositorySpy =
+    new CheckAccountByEmailRepositorySpy()
   const hasherSpy = new HasherSpy()
   const addAccountRepositorySpy = new AddAccountRepositorySpy()
-  const sut = new DbAddAccount(hasherSpy, addAccountRepositorySpy, checkAccountByEmailRepositorySpy)
+  const sut = new DbAddAccount(
+    hasherSpy,
+    addAccountRepositorySpy,
+    checkAccountByEmailRepositorySpy
+  )
   return {
     sut,
     hasherSpy,
     addAccountRepositorySpy,
-    checkAccountByEmailRepositorySpy
+    checkAccountByEmailRepositorySpy,
   }
 }
 
@@ -44,13 +53,24 @@ describe('DbAddAccount Usecase', () => {
     expect(addAccountRepositorySpy.params).toEqual({
       name: addAccountParams.name,
       email: addAccountParams.email,
-      password: hasherSpy.digest
+      cardNumber: addAccountParams.cardNumber,
+      cardHolder: addAccountParams.cardHolder,
+      expirationDate: addAccountParams.expirationDate,
+      cvv: addAccountParams.cvv,
+      street: addAccountParams.street,
+      housenumber: addAccountParams.housenumber,
+      neighborghood: addAccountParams.neighborghood,
+      city: addAccountParams.city,
+      state: addAccountParams.state,
+      password: hasherSpy.digest,
     })
   })
 
   test('Should throw if AddAccountRepository throws', async () => {
     const { sut, addAccountRepositorySpy } = makeSut()
-    jest.spyOn(addAccountRepositorySpy, 'add').mockImplementationOnce(throwError)
+    jest
+      .spyOn(addAccountRepositorySpy, 'add')
+      .mockImplementationOnce(throwError)
     const promise = sut.add(mockAddAccountParams())
     await expect(promise).rejects.toThrow()
   })

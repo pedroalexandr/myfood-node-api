@@ -101,7 +101,7 @@ describe('AccountMongoRepository', () => {
         name,
         email,
         password,
-        accessToken
+        accessToken,
       })
       const account = await sut.loadByToken(accessToken)
       expect(account).toBeTruthy()
@@ -115,9 +115,8 @@ describe('AccountMongoRepository', () => {
         email,
         password,
         accessToken,
-        role: 'admin'
       })
-      const account = await sut.loadByToken(accessToken, 'admin')
+      const account = await sut.loadByToken(accessToken)
       expect(account).toBeTruthy()
       expect(account.id).toBeTruthy()
     })
@@ -128,9 +127,9 @@ describe('AccountMongoRepository', () => {
         name,
         email,
         password,
-        accessToken
+        accessToken,
       })
-      const account = await sut.loadByToken(accessToken, 'admin')
+      const account = await sut.loadByToken(accessToken)
       expect(account).toBeFalsy()
     })
 
@@ -141,7 +140,6 @@ describe('AccountMongoRepository', () => {
         email,
         password,
         accessToken,
-        role: 'admin'
       })
       const account = await sut.loadByToken(accessToken)
       expect(account).toBeTruthy()

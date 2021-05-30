@@ -5,7 +5,7 @@ import { LoadAccountByTokenSpy } from '@/tests/presentation/mocks'
 import { throwError } from '@/tests/domain/mocks'
 
 const mockRequest = (): AuthMiddleware.Request => ({
-  accessToken: 'any_token'
+  accessToken: 'any_token',
 })
 
 type SutTypes = {
@@ -13,12 +13,12 @@ type SutTypes = {
   loadAccountByTokenSpy: LoadAccountByTokenSpy
 }
 
-const makeSut = (role?: string): SutTypes => {
+const makeSut = (): SutTypes => {
   const loadAccountByTokenSpy = new LoadAccountByTokenSpy()
-  const sut = new AuthMiddleware(loadAccountByTokenSpy, role)
+  const sut = new AuthMiddleware(loadAccountByTokenSpy)
   return {
     sut,
-    loadAccountByTokenSpy
+    loadAccountByTokenSpy,
   }
 }
 
@@ -31,7 +31,7 @@ describe('Auth Middleware', () => {
 
   test('Should call LoadAccountByToken with correct accessToken', async () => {
     const role = 'any_role'
-    const { sut, loadAccountByTokenSpy } = makeSut(role)
+    const { sut, loadAccountByTokenSpy } = makeSut()
     const httpRequest = mockRequest()
     await sut.handle(httpRequest)
     expect(loadAccountByTokenSpy.accessToken).toBe(httpRequest.accessToken)
@@ -48,9 +48,11 @@ describe('Auth Middleware', () => {
   test('Should return 200 if LoadAccountByToken returns an account', async () => {
     const { sut, loadAccountByTokenSpy } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(ok({
-      accountId: loadAccountByTokenSpy.result.id
-    }))
+    expect(httpResponse).toEqual(
+      ok({
+        accountId: loadAccountByTokenSpy.result.id,
+      })
+    )
   })
 
   test('Should return 500 if LoadAccountByToken throws', async () => {

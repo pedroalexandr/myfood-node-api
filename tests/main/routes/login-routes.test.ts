@@ -26,19 +26,37 @@ describe('Login Routes', () => {
       await request(app)
         .post('/api/signup')
         .send({
-          name: 'Alexandre',
-          email: 'alexdevcoder@gmail.com',
-          password: '123',
-          passwordConfirmation: '123',
+          name: 'Usuario Teste',
+          email: 'usuariotestedev@gmail.com',
+          cardNumber: '5162098767873153',
+          cardHolder: 'USUARIO A E TESTE',
+          expirationDate: '11/40',
+          cvv: '218',
+          street: 'Rua das Cajazeiras Pálidas',
+          housenumber: '192',
+          neighborghood: 'Parangaba',
+          city: 'Fortaleza',
+          state: 'CE',
+          password: 'senhaforte123',
+          passwordConfirmation: 'senhaforte123',
         })
         .expect(200)
       await request(app)
         .post('/api/signup')
         .send({
-          name: 'Alexandre',
-          email: 'alexdevcoder@gmail.com',
-          password: '123',
-          passwordConfirmation: '123',
+          name: 'Usuario Teste',
+          email: 'usuariotestedev@gmail.com',
+          cardNumber: '5162098767873153',
+          cardHolder: 'USUARIO A E TESTE',
+          expirationDate: '11/40',
+          cvv: '218',
+          street: 'Rua das Cajazeiras Pálidas',
+          housenumber: '192',
+          neighborghood: 'Parangaba',
+          city: 'Fortaleza',
+          state: 'CE',
+          password: 'senhaforte123',
+          passwordConfirmation: 'senhaforte123',
         })
         .expect(403)
     })
